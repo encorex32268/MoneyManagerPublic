@@ -66,24 +66,10 @@ fun HomeScreen(
                     .fillMaxSize()
                     .padding(padding)
             ) {
-//                DateLayout(
-//                    modifier = Modifier.fillMaxWidth(),
-//                    currentDate = "${state.nowDateYear}/${state.nowDateMonth}",
-//                    onYearPick = {
-//                        onEvent(
-//                            HomeEvent.OnDatePick(it)
-//                        )
-//                    }
-//                )
                 DatePicker(
                     year = state.nowDateYear.toIntOrNull()?:0,
                     month = state.nowDateMonth.toIntOrNull()?:0,
-                    onArrowLeftClick = {
-                        Log.d("TAG", "HomeScreen: onArrowLeftClick ${it}")
-                       onEvent(HomeEvent.OnDatePick(it))
-                    },
-                    onArrowRightClick = {
-                        Log.d("TAG", "HomeScreen: onArrowRightClick ${it}")
+                    onDateChange = {
                         onEvent(HomeEvent.OnDatePick(it))
                     }
                 )

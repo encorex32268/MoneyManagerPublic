@@ -35,7 +35,7 @@ class ChartViewModel @Inject constructor(
             val calendar = Calendar.getInstance()
             if (normalDate != null){
                 calendar.set(Calendar.YEAR , normalDate.year)
-                calendar.set(Calendar.MONTH , normalDate.month)
+                calendar.set(Calendar.MONTH , normalDate.month - 1)
             }
             val (startTime, endTime) = MoneyManagerDateUtils.getStartAndEndTime(calendar)
             chartRepository.getExpenseByStartTimeAndEndTime(
@@ -50,8 +50,8 @@ class ChartViewModel @Inject constructor(
                 val expensesTypeList =
                     it.filter { it.isIncome == state.value.isIncomeShow }.groupBy {
                         it.category?.typeId ?: 0
-                    }.toList().sortedBy {
-                        it.first
+                    }.toList().sortedByDescending {
+                        it.second.sumOf { it.cost }
                     }
                 val itemCharts = dataGroup.map {
                     val typeId = it.key
@@ -68,16 +68,8 @@ class ChartViewModel @Inject constructor(
                     it.copy(
                         items = itemCharts.filterNotNull(),
                         expensesTypeList = expensesTypeList,
-                        nowDateYear = if (normalDate != null){
-                            normalDate.year.toString()
-                        }else{
-                            Calendar.getInstance().get(Calendar.YEAR).toString()
-                        },
-                        nowDateMonth = if(normalDate != null){
-                            (normalDate.month+1).toString()
-                        }else{
-                            (Calendar.getInstance().get(Calendar.MONTH) + 1).toString()
-                        }
+                        nowDateYear = normalDate?.year?.toString() ?: Calendar.getInstance().get(Calendar.YEAR).toString(),
+                        nowDateMonth = normalDate?.month?.toString() ?:(Calendar.getInstance().get(Calendar.MONTH) + 1).toString()
                     )
                 }
 
@@ -90,8 +82,8 @@ class ChartViewModel @Inject constructor(
     fun onChartClick(){
         val expensesTypeList  = dbExpenseState.value.filter { it.isIncome != state.value.isIncomeShow }.groupBy {
             it.category?.typeId?:0
-        }.toList().sortedBy {
-            it.first
+        }.toList().sortedByDescending {
+            it.second.sumOf { it.cost }
         }
         _state.update {
             it.copy(

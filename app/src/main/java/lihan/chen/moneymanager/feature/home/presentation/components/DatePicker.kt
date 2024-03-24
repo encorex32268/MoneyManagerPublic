@@ -23,8 +23,7 @@ fun DatePicker(
     modifier: Modifier = Modifier,
     year: Int,
     month: Int,
-    onArrowLeftClick: (NormalDate) -> Unit = {},
-    onArrowRightClick: (NormalDate) -> Unit = {}
+    onDateChange: (NormalDate) -> Unit = {} ,
 ) {
     Row(
         modifier = modifier,
@@ -46,7 +45,7 @@ fun DatePicker(
                         }
                     }
                 }
-                onArrowLeftClick(result)
+                onDateChange(result)
 
             }
         ) {
@@ -77,7 +76,7 @@ fun DatePicker(
                         }
                     }
                 }
-                onArrowRightClick(result)
+                onDateChange(result)
             }
         ) {
             Icon(

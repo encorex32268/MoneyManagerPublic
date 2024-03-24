@@ -109,14 +109,8 @@ fun ChartLayout(
                 .fillMaxWidth()
                 .height(300.dp)
                 .align(Alignment.CenterHorizontally),
-            shape = RoundedCornerShape(20.dp),
-            border = BorderStroke(
-                width = 0.dp,
-                color = MaterialTheme.colorScheme.onSurface
-            ),
-            elevation = CardDefaults.cardElevation(4.dp),
-            colors = CardDefaults.cardColors(
-                contentColor = MaterialTheme.colorScheme.onSurface
+            colors = CardDefaults.outlinedCardColors(
+                containerColor = Color.Transparent
             )
         ) {
             Row(
@@ -236,13 +230,12 @@ private fun DetailExpense(
             var expand by remember {
                 mutableStateOf(false)
             }
-            ElevatedCard(
+            OutlinedCard(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = { expand = !expand},
-                colors = CardDefaults.cardColors(
-                    contentColor = MaterialTheme.colorScheme.onSurface
+                colors = CardDefaults.outlinedCardColors(
+                    containerColor = Color.Transparent
                 ),
-                elevation = CardDefaults.elevatedCardElevation(4.dp)
             ) {
                 Row(
                     modifier = Modifier
@@ -317,74 +310,86 @@ private fun DetailExpense(
 
 @ExperimentalMaterial3Api
 @PreviewLightDark
+@Preview(showSystemUi = true)
 @Composable
 fun DetailExpensePreview() {
     MoneyManagerTheme {
-        DetailExpense(
-            expensesTypeList = listOf(
-                Pair(
-                    FOOD, listOf(
-                        Expense(
-                            category = CategoryItem.getItemsForAddNew()[1],
-                            description = "Test1", isIncome = false, cost = 100
-                        ),
-                        Expense(
-                            category = CategoryItem.getItemsForAddNew()[2],
-                            description = "Test2", isIncome = false, cost = 200
-                        ),
-                        Expense(
-                            category = CategoryItem.getItemsForAddNew()[3],
-                            description = "Test3", isIncome = false, cost = 300
-                        ),
-                        Expense(
-                            category = CategoryItem.getItemsForAddNew()[4],
-                            description = "Test4", isIncome = false, cost = 400
-                        ),
-                        Expense(
-                            category = CategoryItem.getItemsForAddNew()[5],
-                            description = "Test5", isIncome = false, cost = 500
-                        ),
-                    )),
+        Box(modifier = Modifier.background(
+            MaterialTheme.colorScheme.background
+        )) {
+            DetailExpense(
+                expensesTypeList = listOf(
+                    Pair(
+                        FOOD, listOf(
+                            Expense(
+                                category = CategoryItem.getItemsForAddNew()[1],
+                                description = "Test1", isIncome = false, cost = 100
+                            ),
+                            Expense(
+                                category = CategoryItem.getItemsForAddNew()[2],
+                                description = "Test2", isIncome = false, cost = 200
+                            ),
+                            Expense(
+                                category = CategoryItem.getItemsForAddNew()[3],
+                                description = "Test3", isIncome = false, cost = 300
+                            ),
+                            Expense(
+                                category = CategoryItem.getItemsForAddNew()[4],
+                                description = "Test4", isIncome = false, cost = 400
+                            ),
+                            Expense(
+                                category = CategoryItem.getItemsForAddNew()[5],
+                                description = "Test5", isIncome = false, cost = 500
+                            ),
+                        )),
 
-                )
-        )
+                    )
+            )
+
+        }
 
     }
 
 }
 
 @PreviewLightDark
+@Preview(showSystemUi = true)
 @Composable
 fun ChartLayoutPreview() {
     MoneyManagerTheme {
-        ChartLayout(
-            items = listOf(
-                Chart(
-                    typeId = FOOD,
-                    income = 300,
-                    expense = 300
-                ),
-                Chart(
-                    typeId = SPORTS,
-                    income = 300,
-                    expense = 400
-                ),
-                Chart(
-                    typeId = TRAFFIC,
-                    income = 300,
-                    expense = 600
-                ),
-                Chart(
-                    typeId = WEAR,
-                    income = 300,
-                    expense = 700
-                ),
-                Chart(
-                    typeId = SHOPPING,
-                    income = 300,
-                    expense = 1000
-                ),
+        Box(modifier = Modifier.background(
+            MaterialTheme.colorScheme.background
+        )){
+            ChartLayout(
+                items = listOf(
+                    Chart(
+                        typeId = FOOD,
+                        income = 300,
+                        expense = 300
+                    ),
+                    Chart(
+                        typeId = SPORTS,
+                        income = 300,
+                        expense = 400
+                    ),
+                    Chart(
+                        typeId = TRAFFIC,
+                        income = 300,
+                        expense = 600
+                    ),
+                    Chart(
+                        typeId = WEAR,
+                        income = 300,
+                        expense = 700
+                    ),
+                    Chart(
+                        typeId = SHOPPING,
+                        income = 300,
+                        expense = 1000
+                    ),
+                )
             )
-        )
+
+        }
     }
 }
