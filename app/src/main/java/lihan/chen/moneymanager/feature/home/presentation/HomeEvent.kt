@@ -7,4 +7,11 @@ sealed class HomeEvent{
         val normalDate: NormalDate
     ) : HomeEvent()
 
+    data class OnArrowLeftClick(
+        val normalDate: NormalDate
+    ): HomeEvent()
+
+    data class OnArrowRightClick(
+        val normalDate: NormalDate
+    ): HomeEvent()
 }

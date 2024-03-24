@@ -1,5 +1,6 @@
 package lihan.chen.moneymanager.feature.home.presentation
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -42,6 +43,7 @@ import lihan.chen.moneymanager.feature.core.util.LocalSpacing
 import lihan.chen.moneymanager.feature.core.util.MoneyManagerDateUtils
 import lihan.chen.moneymanager.feature.home.presentation.components.AmountTextLayout
 import lihan.chen.moneymanager.feature.home.presentation.components.DateLayout
+import lihan.chen.moneymanager.feature.home.presentation.components.DatePicker
 import lihan.chen.moneymanager.feature.home.presentation.components.ExpenseItem
 import java.time.Instant
 
@@ -64,13 +66,25 @@ fun HomeScreen(
                     .fillMaxSize()
                     .padding(padding)
             ) {
-                DateLayout(
-                    modifier = Modifier.fillMaxWidth(),
-                    currentDate = "${state.nowDateYear}/${state.nowDateMonth}",
-                    onYearPick = {
-                        onEvent(
-                            HomeEvent.OnDatePick(it)
-                        )
+//                DateLayout(
+//                    modifier = Modifier.fillMaxWidth(),
+//                    currentDate = "${state.nowDateYear}/${state.nowDateMonth}",
+//                    onYearPick = {
+//                        onEvent(
+//                            HomeEvent.OnDatePick(it)
+//                        )
+//                    }
+//                )
+                DatePicker(
+                    year = state.nowDateYear.toIntOrNull()?:0,
+                    month = state.nowDateMonth.toIntOrNull()?:0,
+                    onArrowLeftClick = {
+                        Log.d("TAG", "HomeScreen: onArrowLeftClick ${it}")
+                       onEvent(HomeEvent.OnDatePick(it))
+                    },
+                    onArrowRightClick = {
+                        Log.d("TAG", "HomeScreen: onArrowRightClick ${it}")
+                        onEvent(HomeEvent.OnDatePick(it))
                     }
                 )
                 Spacer(modifier = Modifier.height(spacer.small))

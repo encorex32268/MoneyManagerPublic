@@ -8,6 +8,13 @@ object MoneyManagerDateUtils {
 
     fun getTodayCalendar(): Calendar = Calendar.getInstance()
 
+    /**
+     *  getStartAndEndTime :
+     *  Parameter : calendar : User Picked Time
+     *  return : startTime and endTime  (TimeInMillis)
+     *  ex : pick : 2024/03
+     *  return start  03/01  end 03/31
+     */
     fun getStartAndEndTime(
         calendar : Calendar
     ) : Pair<Long,Long> {

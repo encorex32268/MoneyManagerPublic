@@ -57,7 +57,10 @@ fun AmountTextLayout(
             width = 0.dp,
             color = MaterialTheme.colorScheme.onSurface
         ),
-        elevation = CardDefaults.cardElevation(4.dp)
+        elevation = CardDefaults.cardElevation(4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.background
+        )
     ){
         Row(
             modifier = Modifier

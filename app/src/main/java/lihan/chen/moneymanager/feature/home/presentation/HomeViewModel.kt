@@ -61,7 +61,7 @@ class HomeViewModel @Inject constructor(
                 val normalDate = event.normalDate
                 val calendar = Calendar.getInstance()
                 calendar.set(Calendar.YEAR , normalDate.year)
-                calendar.set(Calendar.MONTH , normalDate.month)
+                calendar.set(Calendar.MONTH , normalDate.month - 1)
 
                 val (startTime , endTime )= MoneyManagerDateUtils.getStartAndEndTime(calendar)
                 homeRepository.getExpenseByStartTimeAndEndTime(
@@ -79,7 +79,7 @@ class HomeViewModel @Inject constructor(
                     _state.update { state ->
                         state.copy(
                             nowDateYear =normalDate.year.toString(),
-                            nowDateMonth = (normalDate.month+1).toString(),
+                            nowDateMonth = (normalDate.month).toString(),
                             income = income,
                             expense = expense,
                             totalAmount = total,
