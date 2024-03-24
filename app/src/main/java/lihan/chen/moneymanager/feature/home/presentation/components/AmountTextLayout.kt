@@ -25,15 +25,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import lihan.chen.moneymanager.R
 import lihan.chen.moneymanager.feature.core.presentation.components.Texts
 import lihan.chen.moneymanager.feature.core.util.LocalSpacing
+import lihan.chen.moneymanager.feature.core.util.Spacer
 import lihan.chen.moneymanager.feature.core.util.toMoneyString
 import lihan.chen.moneymanager.ui.theme.CorrectColor
 import lihan.chen.moneymanager.ui.theme.ErrorColor
@@ -47,19 +50,11 @@ fun AmountTextLayout(
     total : Long
 ) {
     val spacer = LocalSpacing.current
-    var totalTextSize by remember {
-        mutableStateOf(24.sp)
-    }
     OutlinedCard(
         modifier = modifier,
         shape = RoundedCornerShape(0.dp),
-        border = BorderStroke(
-            width = 0.dp,
-            color = MaterialTheme.colorScheme.onSurface
-        ),
-        elevation = CardDefaults.cardElevation(4.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.background
+        colors = CardDefaults.outlinedCardColors(
+            containerColor = Color.Transparent
         )
     ){
         Row(
@@ -70,36 +65,28 @@ fun AmountTextLayout(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Column(
-                modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Texts.TitleSmall(
-                    text = stringResource(id = R.string.total)
-                )
-                Texts.TitleMedium(
-                    text = total.toMoneyString(),
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontSize = totalTextSize
-                    ),
-                    textAlign = TextAlign.Center,
-                    overflow = TextOverflow.Ellipsis,
-                    onTextLayout = {
-                        if (it.hasVisualOverflow && totalTextSize > 9.sp){
-                            totalTextSize = (totalTextSize.value - 1.0F).sp
-                        }
-                    },
-                    maxLines = 1 ,
-                )
-            }
+            AmountText(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(vertical = spacer.small),
+                title = stringResource(id = R.string.total),
+                style = MaterialTheme.typography.titleMedium.copy(
+                    textAlign = TextAlign.Center
+                ),
+                textColor = MaterialTheme.colorScheme.onBackground,
+                text = total.toMoneyString(),
+                textSize = 20.sp
+            )
             AmountText(
                 modifier = Modifier
                     .weight(1f)
                     .padding(vertical = spacer.small),
                 title = stringResource(id = R.string.income),
                 text = income.toMoneyString(),
-                textColor = CorrectColor
+                textColor = CorrectColor,
+                style = MaterialTheme.typography.titleSmall.copy(
+                    fontSize = 14.sp
+                )
             )
             AmountText(
                 modifier = Modifier
@@ -107,7 +94,10 @@ fun AmountTextLayout(
                     .padding(vertical = spacer.small),
                 title = stringResource(id = R.string.expense),
                 text = expense.toMoneyString(),
-                textColor = ErrorColor
+                textColor = ErrorColor,
+                MaterialTheme.typography.titleSmall.copy(
+                    fontSize = 14.sp
+                )
             )
         }
 
@@ -117,12 +107,14 @@ fun AmountTextLayout(
 @Composable
 private fun AmountText(
     modifier: Modifier = Modifier,
-    title : String,
-    text : String,
-    textColor : Color
+    title: String,
+    text: String,
+    textColor: Color,
+    style: TextStyle,
+    textSize: TextUnit = 14.sp
 ){
-    var textSize by remember {
-        mutableStateOf(14.sp)
+    var dynamicTextSize by remember {
+        mutableStateOf(textSize)
     }
     Column(
         modifier = modifier,
@@ -133,15 +125,15 @@ private fun AmountText(
         Spacer(modifier = Modifier.width(LocalSpacing.current.extraLarge))
         Texts.TitleSmall(
             text = text,
-            style = MaterialTheme.typography.titleSmall.copy(
-                fontSize = textSize
+            style = style.copy(
+                fontSize = dynamicTextSize
             ),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             color = textColor,
             onTextLayout = {
-                if (it.hasVisualOverflow && textSize > 9.sp){
-                    textSize = (textSize.value - 1.0F).sp
+                if (it.hasVisualOverflow && dynamicTextSize > 9.sp){
+                    dynamicTextSize = (dynamicTextSize.value - 1.0F).sp
                 }
             }
         )
