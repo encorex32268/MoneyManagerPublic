@@ -84,9 +84,7 @@ dependencies {
     kapt ("androidx.room:room-compiler:$room_version")
     implementation ("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
-
-
-
+    
     //Dagger Hilt
     val hilt_plugin_version = "2.48"
     implementation ("com.google.dagger:hilt-android:$hilt_plugin_version")
@@ -103,16 +101,6 @@ dependencies {
     implementation("androidx.datastore:datastore-core:1.0.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.datastore:datastore-preferences-core:1.0.0")
-
-    //Chart
-    // For Jetpack Compose.
-    implementation("com.patrykandpatrick.vico:compose:1.13.1")
-    // For `compose`. Creates a `ChartStyle` based on an M3 Material Theme.
-    implementation("com.patrykandpatrick.vico:compose-m3:1.13.1")
-    // Houses the core logic for charts and other elements. Included in all other modules.
-    implementation("com.patrykandpatrick.vico:core:1.13.1")
-    // For the view system.
-    implementation("com.patrykandpatrick.vico:views:1.13.1")
 
     implementation ("com.opencsv:opencsv:5.2")
 

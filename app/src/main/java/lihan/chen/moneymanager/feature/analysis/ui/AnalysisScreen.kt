@@ -23,18 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
-import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
-import com.patrykandpatrick.vico.compose.chart.Chart
-import com.patrykandpatrick.vico.compose.chart.column.columnChart
-import com.patrykandpatrick.vico.compose.m3.style.m3ChartStyle
-import com.patrykandpatrick.vico.compose.style.ProvideChartStyle
-import com.patrykandpatrick.vico.core.component.marker.MarkerComponent
-import com.patrykandpatrick.vico.core.component.text.TextComponent
-import com.patrykandpatrick.vico.core.entry.ChartEntryModelProducer
-import com.patrykandpatrick.vico.core.entry.entryOf
 import lihan.chen.moneymanager.feature.core.domain.util.ResUtils
 import lihan.chen.moneymanager.feature.core.presentation.components.Texts
 import lihan.chen.moneymanager.feature.core.util.LocalSpacing
@@ -54,8 +42,7 @@ fun AnalysisScreen(
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(spacer.normal),
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
@@ -68,10 +55,9 @@ fun AnalysisScreen(
                     tint = MaterialTheme.colorScheme.onSurface
                 )
             }
-            Texts.TitleMedium(
+            Texts.TitleSmall(
                 modifier = Modifier.weight(1f),
                 text = state.nowDateYear,
-                style = MaterialTheme.typography.titleMedium,
                 textAlign = TextAlign.Center
             )
 
@@ -84,38 +70,6 @@ fun AnalysisScreen(
                     tint = MaterialTheme.colorScheme.onSurface
                 )
             }
-        }
-        val items  = state.items.map { (month , sum) ->
-            entryOf(
-                x = month ,
-                y = sum
-            )
-        }
-        if (items.isNotEmpty()){
-            ProvideChartStyle(
-                chartStyle = m3ChartStyle()
-            ){
-                Chart(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    chart = columnChart(),
-                    chartModelProducer = ChartEntryModelProducer(items),
-                    startAxis = rememberStartAxis(),
-                    bottomAxis = rememberBottomAxis(
-                        guideline = null,
-                        axis = null
-                    ),
-                    marker = MarkerComponent(
-                        label = TextComponent.Builder().apply {
-                            textSizeSp = 14.sp.value
-                        }.build(),
-                        indicator = null,
-                        guideline = null
-                    )
-                )
-            }
-
         }
         LazyColumn{
             itemsIndexed(
