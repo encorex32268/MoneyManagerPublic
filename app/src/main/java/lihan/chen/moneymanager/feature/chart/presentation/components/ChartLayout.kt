@@ -69,20 +69,24 @@ fun ChartLayout(
     detailExpense : List<Pair<Int,List<Expense>>> = emptyList(),
 ) {
     val spacer = LocalSpacing.current
-    val costItems = if (isIncomeShow) {
-        items.map {
-            Pair(it.typeId, it.income)
-        }
-    } else {
-        items.map {
-            Pair(it.typeId, it.expense)
+    val costItems = remember(isIncomeShow) {
+        if (isIncomeShow) {
+            items.map {
+                Pair(it.typeId, it.income)
+            }
+        } else {
+            items.map {
+                Pair(it.typeId, it.expense)
+            }
         }
     }
-    val sum = items.sumOf {
-        if (isIncomeShow) {
-            it.income
-        } else {
-            it.expense
+    val sum = remember(isIncomeShow) {
+        items.sumOf {
+            if (isIncomeShow) {
+                it.income
+            } else {
+                it.expense
+            }
         }
     }
     var isStart by remember {
@@ -259,17 +263,18 @@ private fun DetailExpense(
 
             AnimatedVisibility(visible =expand) {
                 Column {
-                    val detailList = pair.second.sortedBy { it.cost }.groupBy { it.description }
-
+                    val detailList = remember {
+                        pair.second.sortedBy { it.cost }.groupBy { it.description }
+                    }
                     detailList.onEachIndexed { index, entry ->
                         Box(modifier = Modifier
                             .drawBehind {
-                                val path = Path()
-                                path.moveTo(10.dp.toPx(),0f)
-                                path.lineTo(10.dp.toPx(), size.height / 2 )
-                                path.lineTo(20.dp.toPx(), size.height / 2)
-                                path.moveTo(10.dp.toPx(),size.height / 2)
-
+                                val path = Path().apply {
+                                    moveTo(10.dp.toPx(),0f)
+                                    lineTo(10.dp.toPx(), size.height / 2 )
+                                    lineTo(20.dp.toPx(), size.height / 2)
+                                    moveTo(10.dp.toPx(),size.height / 2)
+                                }
                                 drawPath(
                                     path = path,
                                     color = Color.LightGray,

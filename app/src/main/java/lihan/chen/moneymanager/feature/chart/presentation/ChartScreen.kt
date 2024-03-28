@@ -61,11 +61,7 @@ fun ChartScreen(
                 .weight(1f)
                 .padding(bottom = spacer.normal)
         ){
-            if (state.items.isEmpty()) {
-                item {
-
-                }
-            }else{
+            if (state.items.isNotEmpty()) {
                 item {
                     Spacer(modifier = Modifier.height(spacer.extraLarge))
                     Column(
