@@ -66,13 +66,13 @@ fun ProfileScreen(
         isStart = true
     }
     val profileList = listOf(
-        ProfileItem(
-            title = stringResource(id = R.string.profile_settings_fileout),
-            imageVector = ImageVector.vectorResource(id = R.drawable.base_drive_file_outline),
-            onItemClick = {
-                isShowDatePicker = true
-            }
-        ),
+//        ProfileItem(
+//            title = stringResource(id = R.string.profile_settings_fileout),
+//            imageVector = ImageVector.vectorResource(id = R.drawable.base_drive_file_outline),
+//            onItemClick = {
+//                isShowDatePicker = true
+//            }
+//        ),
         ProfileItem(
             title = stringResource(id = R.string.profile_settings_notification),
             imageVector = Icons.Outlined.Notifications,
